@@ -17,8 +17,9 @@
 		56304698171E582400587727 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56304697171E582400587727 /* Default@2x.png */; };
 		5630469A171E582400587727 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56304699171E582400587727 /* Default-568h@2x.png */; };
 		5630469D171E582400587727 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5630469B171E582400587727 /* MainStoryboard.storyboard */; };
-		563046B6171E8D7800587727 /* PullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 563046B5171E8D7800587727 /* PullViewController.m */; };
 		563046BF171E8DD800587727 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 563046BE171E8DD800587727 /* DemoViewController.m */; };
+		563046C2171EC7DF00587727 /* RefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 563046C1171EC7DF00587727 /* RefreshTableFooterView.m */; };
+		563046C5171EC87100587727 /* RefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 563046C4171EC87000587727 /* RefreshTableHeaderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,10 +37,12 @@
 		56304697171E582400587727 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		56304699171E582400587727 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5630469C171E582400587727 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		563046B4171E8D7800587727 /* PullViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullViewController.h; sourceTree = "<group>"; };
-		563046B5171E8D7800587727 /* PullViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullViewController.m; sourceTree = "<group>"; };
 		563046BD171E8DD800587727 /* DemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
 		563046BE171E8DD800587727 /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
+		563046C0171EC7DF00587727 /* RefreshTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshTableFooterView.h; sourceTree = "<group>"; };
+		563046C1171EC7DF00587727 /* RefreshTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableFooterView.m; sourceTree = "<group>"; };
+		563046C3171EC87000587727 /* RefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshTableHeaderView.h; sourceTree = "<group>"; };
+		563046C4171EC87000587727 /* RefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableHeaderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,8 +91,10 @@
 			children = (
 				56304692171E582400587727 /* AppDelegate.h */,
 				56304693171E582400587727 /* AppDelegate.m */,
-				563046B4171E8D7800587727 /* PullViewController.h */,
-				563046B5171E8D7800587727 /* PullViewController.m */,
+				563046C0171EC7DF00587727 /* RefreshTableFooterView.h */,
+				563046C1171EC7DF00587727 /* RefreshTableFooterView.m */,
+				563046C3171EC87000587727 /* RefreshTableHeaderView.h */,
+				563046C4171EC87000587727 /* RefreshTableHeaderView.m */,
 				563046BD171E8DD800587727 /* DemoViewController.h */,
 				563046BE171E8DD800587727 /* DemoViewController.m */,
 				5630469B171E582400587727 /* MainStoryboard.storyboard */,
@@ -180,8 +185,9 @@
 			files = (
 				56304690171E582400587727 /* main.m in Sources */,
 				56304694171E582400587727 /* AppDelegate.m in Sources */,
-				563046B6171E8D7800587727 /* PullViewController.m in Sources */,
 				563046BF171E8DD800587727 /* DemoViewController.m in Sources */,
+				563046C2171EC7DF00587727 /* RefreshTableFooterView.m in Sources */,
+				563046C5171EC87100587727 /* RefreshTableHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +312,7 @@
 				563046A5171E582400587727 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
