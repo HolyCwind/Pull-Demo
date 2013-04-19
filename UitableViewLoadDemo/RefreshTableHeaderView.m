@@ -10,6 +10,7 @@
 #define RELEASE @"好了松手啦"
 #define LOADING @"加载中..."
 #define DURATIONTIME 0.3f
+#define UILABELHEIGHT 44
 
 #import "RefreshTableHeaderView.h"
 
@@ -19,14 +20,13 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-      UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height - 44, 320, 44)];
+      UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height - UILABELHEIGHT, 320, UILABELHEIGHT)];
       label.backgroundColor = [UIColor clearColor];
       label.textAlignment = NSTextAlignmentCenter;
       [self addSubview:label];
       self.headerLabel = label;
       [self setStates:REFRESHNormal];
     }
-  
     return self;
 }
 
@@ -65,13 +65,13 @@
 {
   if (self.state == REFRESHLoading) {
     CGFloat offset = MAX(scrollView.contentOffset.y * -1,0);
-    offset = MIN(offset, 44);
+    offset = MIN(offset, UILABELHEIGHT);
     scrollView.contentInset = UIEdgeInsetsMake(offset, 0, 0, 0);
   }else if(scrollView.isDragging) {
     BOOL isLoading = [self.delegate refreshTableHeaderDataSourceIsLoading];
-    if (self.state == REFRESHPulling && scrollView.contentOffset.y > -44 && scrollView.contentOffset.y < 0 && !isLoading) {
+    if (self.state == REFRESHPulling && scrollView.contentOffset.y > -UILABELHEIGHT && scrollView.contentOffset.y < 0 && !isLoading) {
       [self setStates:REFRESHNormal];
-    } else if (self.state == REFRESHNormal && scrollView.contentOffset.y < -44 && !isLoading) {
+    } else if (self.state == REFRESHNormal && scrollView.contentOffset.y < -UILABELHEIGHT && !isLoading) {
       [self setStates:REFRESHPulling];
     }
     
@@ -84,12 +84,12 @@
 - (void)refreshScrollViewDidEndDragging:(UIScrollView *)scrollView
 {
   BOOL isLoading = [self.delegate refreshTableHeaderDataSourceIsLoading];
-  if (scrollView.contentOffset.y < -44 && !isLoading) {
+  if (scrollView.contentOffset.y < -UILABELHEIGHT && !isLoading) {
     [self.delegate refreshTableHeader];
     [self setStates:REFRESHLoading];
     [UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:DURATIONTIME];
-		scrollView.contentInset = UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f);
+		scrollView.contentInset = UIEdgeInsetsMake(UILABELHEIGHT, 0.0f, 0.0f, 0.0f);
 		[UIView commitAnimations];
   }
 }

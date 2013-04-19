@@ -8,6 +8,7 @@
 
 #import "DemoViewController.h"
 
+
 @interface DemoViewController ()
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @end
@@ -29,14 +30,15 @@
   if (self.headerView == nil) {
     RefreshTableHeaderView *headerView = [[RefreshTableHeaderView alloc] initWithFrame:CGRectMake(0, 0 - self.tableView.bounds.size.height, 320, self.tableView.bounds.size.height)];
     headerView.delegate = self;
-    [self.view addSubview:headerView];
+    [self.tableView addSubview:headerView];
     self.headerView = headerView;
   }
   
   if (self.footerView == nil) {
-    RefreshTableFooterView *footerView = [[RefreshTableFooterView alloc] initWithFrame:CGRectMake(0, self.dataArray.count * 44, 320, self.tableView.bounds.size.height)];
+    RefreshTableFooterView *footerView = [[RefreshTableFooterView alloc] initWithFrame:CGRectMake(0, MAX(self.dataArray.count * 44,self.tableView.bounds.size.height - 44), 320, self.tableView.bounds.size.height)];
+    NSLog(@"%f",footerView.frame.origin.y);
     footerView .delegate = self;
-    [self.tableView addSubview:footerView ];
+    [self.tableView addSubview:footerView];
     self.footerView = footerView;
   }
 }
@@ -75,20 +77,29 @@
 {
   /// do sth
   if (self.refreshType == REFRESHFoot) {
+    int numberOfOriginalRows = self.dataArray.count;
     for (int i= 0; i < 10; i++) {
       [self.dataArray addObject:[NSString stringWithFormat:@"%d",i]];
     }
-    [self.tableView reloadData];
-    self.footerView.frame = CGRectMake(0, self.tableView.contentSize.height, 320, 44);
+    int numberOfNewRows = self.dataArray.count;
+    NSMutableArray *indexPathArray = [NSMutableArray array];
+    for (int i = numberOfOriginalRows; i < numberOfNewRows; i++) {
+      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+      [indexPathArray addObject:indexPath];
+    }
+    self.footerView.frame = CGRectMake(0, 44 * self.dataArray.count, 320, 44);
+    [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationMiddle];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfOriginalRows inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
   }else {
     [self.tableView reloadData];
   }
-  self.isLoading = YES;
+  self.isLoading = NO;
+  [self doneLoadTableViewData];
 }
 
 - (void)doneLoadTableViewData
 {
-  self.isLoading = NO;
   [[self chooseRefreshType] refreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 }
 
@@ -113,8 +124,8 @@
 
 - (void)refreshTableHeader
 {
-  [self reloadTableViewDataSource];
-  [self performSelector:@selector(doneLoadTableViewData) withObject:nil afterDelay:2.0];
+  self.isLoading = YES;
+  [self performSelector:@selector(reloadTableViewDataSource) withObject:nil afterDelay:0.5];
 }
 
 - (BOOL)refreshTableHeaderDataSourceIsLoading
@@ -126,9 +137,8 @@
 
 - (void)refreshTableFooter
 {
-  //[self reloadTableViewDataSource];
-  [self performSelector:@selector(reloadTableViewDataSource) withObject:nil afterDelay:2.0];
-  [self performSelector:@selector(doneLoadTableViewData) withObject:nil afterDelay:2.0];
+  self.isLoading = YES;
+  [self performSelector:@selector(reloadTableViewDataSource) withObject:nil afterDelay:0.5];
 }
 
 - (BOOL)refreshTableFooterDataSourceIsLoading

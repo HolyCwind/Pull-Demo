@@ -10,6 +10,7 @@
 #define RELEASE @"好了松手啦"
 #define LOADING @"加载中..."
 #define DURATIONTIME 0.3f
+#define UILABELHEIGHT 44
 
 #import "RefreshTableFooterView.h"
 
@@ -19,14 +20,13 @@
 {
   self = [super initWithFrame:frame];
   if (self) {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, UILABELHEIGHT)];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentCenter;
     [self addSubview:label];
     self.footerLabel = label;
     [self setStates:FOOTNormal];
   }
-  
   return self;
 }
 
@@ -63,12 +63,12 @@
 
 - (void)refreshScrollViewDidScroll:(UIScrollView *)scrollView
 {
-  float offSetButtom = scrollView.contentSize.height - scrollView.frame.size.height;
+  float offSetButtom = MAX(0,scrollView.contentSize.height - scrollView.frame.size.height);
   if(scrollView.isDragging) {
     BOOL isLoading = [self.delegate refreshTableFooterDataSourceIsLoading];
-    if (self.state == FOOTPulling && scrollView.contentOffset.y < offSetButtom + 44 && scrollView.contentOffset.y > offSetButtom && !isLoading) {
+    if (self.state == FOOTPulling && scrollView.contentOffset.y < offSetButtom + UILABELHEIGHT && scrollView.contentOffset.y > offSetButtom && !isLoading) {
       [self setStates:FOOTNormal];
-    } else if (self.state == FOOTNormal && scrollView.contentOffset.y > offSetButtom + 44 && !isLoading) {
+    } else if (self.state == FOOTNormal && scrollView.contentOffset.y > offSetButtom + UILABELHEIGHT && !isLoading) {
       [self setStates:FOOTPulling];
     }
   }
@@ -78,10 +78,11 @@
 {
   BOOL isLoading = [self.delegate refreshTableFooterDataSourceIsLoading];
   float offSetButtom = scrollView.contentSize.height - scrollView.frame.size.height;
-  if (scrollView.contentOffset.y > offSetButtom + 44 && !isLoading) {
+  float offSet = MAX(0, offSetButtom);
+  if (scrollView.contentOffset.y > offSet + UILABELHEIGHT && !isLoading) {
     [UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:DURATIONTIME];
-		scrollView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 44.0f, 0.0f);
+		scrollView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, MAX(UILABELHEIGHT,-offSetButtom + UILABELHEIGHT), 0.0f);
     [self setStates:FOOTLoading];
 		[UIView commitAnimations];
     [self.delegate refreshTableFooter];
